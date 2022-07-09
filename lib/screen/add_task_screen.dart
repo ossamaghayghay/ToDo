@@ -1,20 +1,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:to_app_bootcamp/models/tasks.dart';
-import 'package:to_app_bootcamp/screen/tasks_screen.dart';
 
 class AddTaskScreen extends StatelessWidget {
    AddTaskScreen({Key? key,required this.addTaskCallBack}) : super(key: key);
    
    final Function addTaskCallBack;
 
-
-  String? taskMessage;
-  bool? checkbox;
-
+   String? taskMessage;
+   
   @override
   Widget build(BuildContext context) {
-  String? newTaskTitle;
+
 
     return Container(
       color: const Color.fromRGBO(117, 117, 117, 0.5),
@@ -40,8 +37,8 @@ class AddTaskScreen extends StatelessWidget {
                  textAlign: TextAlign.center,
                  ),
                TextField(
-                onChanged: (value){
-                  taskMessage = value;
+                onChanged: (newText){
+                  taskMessage = newText;
                 },
                 decoration: const InputDecoration(
                   filled: true,
@@ -52,7 +49,7 @@ class AddTaskScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed:()
                   {
-                    addTaskCallBack(newTaskTitle);
+                    addTaskCallBack(taskMessage);
                     Navigator.pop(context);
                   },
                   child: const Text('Add Task')

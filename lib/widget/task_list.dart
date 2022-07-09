@@ -1,36 +1,40 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:to_app_bootcamp/controller/controller_satete.dart';
 
 import '../models/tasks.dart';
 import 'task_tile.dart';
 
 class TasksList extends StatefulWidget {
-  const TasksList({ Key? key}) : super(key: key);
+   TasksList({ Key? key,required this.tasks}) : super(key: key);
   
+     List<Tasks> tasks;
 
   @override
   State<TasksList> createState() => _TasksListState();
 }
 
 class _TasksListState extends State<TasksList> {
-  List<Tasks> taskList = [];
+  
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-                        
-                   itemBuilder: (context,index)
-                   {
-                    return ExctractTaskTile(
-                    checkValue:taskList[index].isDone!,
-                    title:taskList[index].taskName!,
-                    checkboxCallback:(bool checkboxState)
-                    {
-                      setState(() {
-                        taskList[index].toggoleDone();
-                      });
-                    }
-                    );
-                   },
-                   itemCount: taskList.length,
-                  );
+    return Consumer<TasksController>(
+      builder: (
+        (context, taskcontroller, child) => ListView.builder(
+                     itemBuilder: (context,index)
+                     {
+                      return ExctractTaskTile(
+                       checkValue:taskcontroller.tasks[index].isDone!,
+                       title:taskcontroller.tasks[index].taskName!,
+                       checkboxCallback:(bool checkboxState)
+                      {
+                        taskcontroller.updatecheckBox(taskcontroller.tasks[index]);
+                      }
+                      );
+                     },
+                     itemCount:taskcontroller.gettaskCount,
+                    )
+      ),
+    );
   }
 }
